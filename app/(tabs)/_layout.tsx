@@ -2,10 +2,28 @@ import React from "react";
 import { Tabs } from "expo-router";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { View, StyleSheet } from "react-native";
+import colors from "@/theme/colors";
+import { useTheme } from "@/theme/ThemeContext";
 
 export default function TabsLayout() {
+  const { theme } = useTheme();
+
   return (
-    <Tabs screenOptions={{ tabBarLabelStyle: { color: "#black" } }}>
+    <Tabs
+      screenOptions={{
+        tabBarLabelStyle: { color: colors[theme].text },
+        tabBarStyle: {
+          backgroundColor: colors[theme].secondary,
+          borderTopWidth: 0,
+        },
+        headerStyle: {
+          backgroundColor: colors[theme].primary,
+        },
+        headerTitleStyle: {
+          color: colors[theme].text,
+        },
+      }}
+    >
       <Tabs.Screen
         name='index'
         options={{
@@ -40,19 +58,28 @@ export default function TabsLayout() {
 }
 
 function TabBarIcon({ focused, name }: any) {
+  const { theme } = useTheme();
+
   if (focused)
     return (
-      <View style={styles.iconContainer}>
-        <MaterialCommunityIcons name={name} size={18} color='black' />
+      <View
+        style={[styles.iconContainer, { backgroundColor: colors[theme].focus }]}
+      >
+        <MaterialCommunityIcons
+          name={name}
+          size={18}
+          color={colors[theme].text}
+        />
       </View>
     );
-  return <MaterialCommunityIcons name={name} size={18} color='black' />;
+  return (
+    <MaterialCommunityIcons name={name} size={18} color={colors[theme].text} />
+  );
 }
 
 const styles = StyleSheet.create({
   iconContainer: {
     borderRadius: 50,
-    backgroundColor: "#bbb",
     width: 50,
     padding: 4,
     alignItems: "center",
