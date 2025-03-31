@@ -14,6 +14,17 @@ const colors = {
     text: "#181025",
     focus: "#e9dff7",
   },
+
+  indicator: {
+    green: "#a6ce39",
+    yellow: "#ffed01",
+    orange: "#feb600",
+    deepOrange: "#bb3a01",
+    red: "#990910",
+  },
 };
 
-export default colors;
+type IndicatorColorKey = keyof typeof colors.indicator;
+type IndicatorColor = (typeof colors.indicator)[IndicatorColorKey];
+
+export { colors, IndicatorColor };
