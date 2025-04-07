@@ -1,21 +1,46 @@
+import { useBPData } from "@/contexts/BPDataContext";
 import { colors, IndicatorColor } from "@/theme/colors";
 import { useTheme } from "@/theme/ThemeContext";
-import { useMemo } from "react";
-import { View, StyleSheet, Text, ScrollView } from "react-native";
+import { useEffect, useMemo } from "react";
+import { View, StyleSheet, Text, ScrollView, FlatList } from "react-native";
+import { mockBPData } from "@/mockData";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 export default function Readings() {
   const { theme } = useTheme();
+  const { data, updateData } = useBPData();
 
   return (
-    <ScrollView style={{ backgroundColor: colors[theme].primary }}>
-      <Reading
-        day={"Mon"}
-        date={"Mar 31"}
-        time={"9:29 AM"}
-        bp={[120, 90]}
-        pr={70}
-      />
-    </ScrollView>
+    <FlatList
+      data={data}
+      renderItem={({ item }) => (
+        <Reading
+          day={item.day}
+          date={item.date}
+          time={item.time}
+          bp={item.bp}
+          pr={item.pr}
+        />
+      )}
+      style={{
+        backgroundColor: colors[theme].primary,
+      }}
+      contentContainerStyle={{
+        justifyContent: "center",
+        alignItems: "center",
+        flex: 1,
+      }}
+      ListEmptyComponent={
+        <>
+          <Ionicons
+            name='document-text-outline'
+            size={128}
+            color={colors[theme].secondary}
+          />
+          <Text style={{ color: colors[theme].text }}>No Readings Yet</Text>
+        </>
+      }
+    />
   );
 }
 
