@@ -4,8 +4,17 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { View, StyleSheet } from "react-native";
 import { colors } from "@/theme/colors";
 import { useTheme } from "@/theme/ThemeContext";
+import { BPDataProvider } from "@/contexts/BPDataContext";
 
-export default function TabsLayout() {
+export default function TabsLayoutWrapper() {
+  return (
+    <BPDataProvider>
+      <TabsLayout />
+    </BPDataProvider>
+  );
+}
+
+function TabsLayout() {
   const { theme } = useTheme();
 
   return (
