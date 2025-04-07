@@ -10,6 +10,10 @@ export default function Readings() {
   const { theme } = useTheme();
   const { data, updateData } = useBPData();
 
+  useEffect(() => {
+    // mockBPData.map((data) => updateData(data));
+  }, []);
+
   return (
     <FlatList
       data={data}
@@ -25,20 +29,24 @@ export default function Readings() {
       style={{
         backgroundColor: colors[theme].primary,
       }}
-      contentContainerStyle={{
-        justifyContent: "center",
-        alignItems: "center",
-        flex: 1,
-      }}
+      contentContainerStyle={
+        data.length === 0 ? { flex: 1, justifyContent: "center" } : undefined
+      }
       ListEmptyComponent={
-        <>
+        <View
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            flex: 1,
+          }}
+        >
           <Ionicons
             name='document-text-outline'
             size={128}
             color={colors[theme].secondary}
           />
           <Text style={{ color: colors[theme].text }}>No Readings Yet</Text>
-        </>
+        </View>
       }
     />
   );
