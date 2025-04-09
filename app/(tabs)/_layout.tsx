@@ -3,14 +3,16 @@ import { Tabs } from "expo-router";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { View, StyleSheet } from "react-native";
 import { colors } from "@/theme/colors";
-import { useTheme } from "@/theme/ThemeContext";
+import { useTheme, ThemeProvider } from "@/theme/ThemeContext";
 import { BPDataProvider } from "@/contexts/BPDataContext";
 
 export default function TabsLayoutWrapper() {
   return (
-    <BPDataProvider>
-      <TabsLayout />
-    </BPDataProvider>
+    <ThemeProvider>
+      <BPDataProvider>
+        <TabsLayout />
+      </BPDataProvider>
+    </ThemeProvider>
   );
 }
 
@@ -34,9 +36,10 @@ function TabsLayout() {
       }}
     >
       <Tabs.Screen
-        name='index'
+        name='readings'
         options={{
           title: "Readings",
+          headerShown: false,
           tabBarIcon: ({ focused }) => (
             <TabBarIcon focused={focused} name='clipboard-text' />
           ),

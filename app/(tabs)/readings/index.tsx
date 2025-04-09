@@ -2,7 +2,7 @@ import { useBPData } from "@/contexts/BPDataContext";
 import { colors, IndicatorColor } from "@/theme/colors";
 import { useTheme } from "@/theme/ThemeContext";
 import { useEffect, useMemo } from "react";
-import { View, StyleSheet, Text, ScrollView, FlatList } from "react-native";
+import { View, StyleSheet, Text, FlatList } from "react-native";
 import { mockBPData } from "@/mockData";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
@@ -11,44 +11,46 @@ export default function Readings() {
   const { data, updateData } = useBPData();
 
   useEffect(() => {
-    // mockBPData.map((data) => updateData(data));
+    mockBPData.map((data) => updateData(data));
   }, []);
 
   return (
-    <FlatList
-      data={data}
-      renderItem={({ item }) => (
-        <Reading
-          day={item.day}
-          date={item.date}
-          time={item.time}
-          bp={item.bp}
-          pr={item.pr}
-        />
-      )}
-      style={{
-        backgroundColor: colors[theme].primary,
-      }}
-      contentContainerStyle={
-        data.length === 0 ? { flex: 1, justifyContent: "center" } : undefined
-      }
-      ListEmptyComponent={
-        <View
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-            flex: 1,
-          }}
-        >
-          <Ionicons
-            name='document-text-outline'
-            size={128}
-            color={colors[theme].secondary}
+    <>
+      <FlatList
+        data={data}
+        renderItem={({ item }) => (
+          <Reading
+            day={item.day}
+            date={item.date}
+            time={item.time}
+            bp={[item.bp_sys, item.bp_dia]}
+            pr={item.pr}
           />
-          <Text style={{ color: colors[theme].text }}>No Readings Yet</Text>
-        </View>
-      }
-    />
+        )}
+        style={{
+          backgroundColor: colors[theme].primary,
+        }}
+        contentContainerStyle={
+          data.length === 0 ? { flex: 1, justifyContent: "center" } : undefined
+        }
+        ListEmptyComponent={
+          <View
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              flex: 1,
+            }}
+          >
+            <Ionicons
+              name='document-text-outline'
+              size={128}
+              color={colors[theme].secondary}
+            />
+            <Text style={{ color: colors[theme].text }}>No Readings Yet</Text>
+          </View>
+        }
+      />
+    </>
   );
 }
 
