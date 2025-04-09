@@ -4,7 +4,8 @@ type BPDataType = {
   day: string;
   date: string;
   time: string;
-  bp: [number, number];
+  bp_sys: number;
+  bp_dia: number;
   pr: number;
 };
 
