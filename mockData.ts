@@ -1,7 +1,9 @@
 import { BPDataType } from "./contexts/BPDataContext";
+import uuid from "react-native-uuid";
 
 export const mockBPData: BPDataType[] = [
   {
+    id: uuid.v4() as string,
     day: "Mon",
     date: "Jun 5",
     time: "08:30 AM",
@@ -10,6 +12,7 @@ export const mockBPData: BPDataType[] = [
     pr: 71,
   },
   {
+    id: uuid.v4() as string,
     day: "Tue",
     date: "Jun 6",
     time: "09:00 AM",
@@ -18,6 +21,7 @@ export const mockBPData: BPDataType[] = [
     pr: 78,
   },
   {
+    id: uuid.v4() as string,
     day: "Wed",
     date: "Jun 7",
     time: "10:15 AM",
@@ -26,6 +30,7 @@ export const mockBPData: BPDataType[] = [
     pr: 82,
   },
   {
+    id: uuid.v4() as string,
     day: "Thu",
     date: "Jun 8",
     time: "08:00 AM",
@@ -34,6 +39,7 @@ export const mockBPData: BPDataType[] = [
     pr: 65,
   },
   {
+    id: uuid.v4() as string,
     day: "Fri",
     date: "Jun 9",
     time: "07:30 AM",
@@ -42,6 +48,7 @@ export const mockBPData: BPDataType[] = [
     pr: 72,
   },
   {
+    id: uuid.v4() as string,
     day: "Sat",
     date: "Jun 10",
     time: "06:45 AM",
@@ -50,6 +57,7 @@ export const mockBPData: BPDataType[] = [
     pr: 90,
   },
   {
+    id: uuid.v4() as string,
     day: "Sun",
     date: "Jun 11",
     time: "11:00 AM",
@@ -58,6 +66,7 @@ export const mockBPData: BPDataType[] = [
     pr: 76,
   },
   {
+    id: uuid.v4() as string,
     day: "Mon",
     date: "Jun 12",
     time: "08:30 AM",
@@ -66,6 +75,7 @@ export const mockBPData: BPDataType[] = [
     pr: 60,
   },
   {
+    id: uuid.v4() as string,
     day: "Tue",
     date: "Jun 13",
     time: "09:00 AM",
@@ -74,6 +84,7 @@ export const mockBPData: BPDataType[] = [
     pr: 85,
   },
   {
+    id: uuid.v4() as string,
     day: "Wed",
     date: "Jun 14",
     time: "10:15 AM",
@@ -82,6 +93,7 @@ export const mockBPData: BPDataType[] = [
     pr: 74,
   },
   {
+    id: uuid.v4() as string,
     day: "Thu",
     date: "Jun 15",
     time: "08:00 AM",
@@ -90,6 +102,7 @@ export const mockBPData: BPDataType[] = [
     pr: 63,
   },
   {
+    id: uuid.v4() as string,
     day: "Fri",
     date: "Jun 16",
     time: "07:30 AM",
@@ -98,6 +111,7 @@ export const mockBPData: BPDataType[] = [
     pr: 88,
   },
   {
+    id: uuid.v4() as string,
     day: "Sat",
     date: "Jun 17",
     time: "06:45 AM",
@@ -106,6 +120,7 @@ export const mockBPData: BPDataType[] = [
     pr: 95,
   },
   {
+    id: uuid.v4() as string,
     day: "Sun",
     date: "Jun 18",
     time: "11:00 AM",
@@ -114,6 +129,7 @@ export const mockBPData: BPDataType[] = [
     pr: 70,
   },
   {
+    id: uuid.v4() as string,
     day: "Mon",
     date: "Jun 19",
     time: "08:30 AM",
@@ -122,6 +138,7 @@ export const mockBPData: BPDataType[] = [
     pr: 68,
   },
   {
+    id: uuid.v4() as string,
     day: "Tue",
     date: "Jun 20",
     time: "09:00 AM",
@@ -130,43 +147,12 @@ export const mockBPData: BPDataType[] = [
     pr: 86,
   },
   {
+    id: uuid.v4() as string,
     day: "Wed",
     date: "Jun 21",
     time: "10:15 AM",
     bp_sys: 122,
     bp_dia: 81,
     pr: 73,
-  },
-  {
-    day: "Thu",
-    date: "Jun 22",
-    time: "08:00 AM",
-    bp_sys: 135,
-    bp_dia: 87,
-    pr: 80,
-  },
-  {
-    day: "Fri",
-    date: "Jun 23",
-    time: "07:30 AM",
-    bp_sys: 90,
-    bp_dia: 55,
-    pr: 59,
-  },
-  {
-    day: "Sat",
-    date: "Jun 24",
-    time: "06:45 AM",
-    bp_sys: 200,
-    bp_dia: 120,
-    pr: 100,
-  },
-  {
-    day: "Sun",
-    date: "Jun 25",
-    time: "11:00 AM",
-    bp_sys: 130,
-    bp_dia: 78,
-    pr: 77,
   },
 ];

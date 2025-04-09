@@ -1,6 +1,7 @@
 import { createContext, useContext, useState } from "react";
 
 type BPDataType = {
+  id: string;
   day: string;
   date: string;
   time: string;
@@ -12,6 +13,7 @@ type BPDataType = {
 type BPDataContextType = {
   data: BPDataType[];
   updateData: (data: BPDataType) => void;
+  clearData: () => void;
 };
 
 const BPDataContext = createContext<BPDataContextType | null>(null);
@@ -28,8 +30,10 @@ const BPDataProvider = ({ children }: { children: React.ReactNode }) => {
 
   const updateData = (data: BPDataType) => setData((prev) => [...prev, data]);
 
+  const clearData = () => setData([]);
+
   return (
-    <BPDataContext.Provider value={{ data, updateData }}>
+    <BPDataContext.Provider value={{ data, updateData, clearData }}>
       {children}
     </BPDataContext.Provider>
   );
