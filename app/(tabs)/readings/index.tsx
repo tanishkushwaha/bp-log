@@ -1,37 +1,80 @@
-import { useBPData } from "@/contexts/BPDataContext";
+import { BPDataType, useBPData } from "@/contexts/BPDataContext";
 import { colors, IndicatorColor } from "@/theme/colors";
 import { useTheme } from "@/theme/ThemeContext";
-import { useEffect, useMemo } from "react";
-import { View, StyleSheet, Text, FlatList } from "react-native";
+import { useCallback, useEffect, useMemo } from "react";
+import {
+  View,
+  StyleSheet,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  TouchableNativeFeedback,
+} from "react-native";
 import { mockBPData } from "@/mockData";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { router } from "expo-router";
 
 export default function Readings() {
   const { theme } = useTheme();
-  const { data, updateData } = useBPData();
+  const { data, updateData, clearData } = useBPData();
 
   useEffect(() => {
     mockBPData.map((data) => updateData(data));
+
+    // Clear the data when component dismounts
+    return () => clearData();
   }, []);
+
+  const styles = useMemo(
+    () =>
+      StyleSheet.create({
+        addFloatingButton: {
+          width: 64,
+          height: 64,
+          borderRadius: 32,
+          backgroundColor: colors[theme].focus,
+          position: "absolute",
+          bottom: 16,
+          right: 16,
+          justifyContent: "center",
+          alignItems: "center",
+          elevation: 4,
+        },
+      }),
+    []
+  );
+
+  const renderItem = useCallback(
+    ({ item }: { item: BPDataType }) => (
+      <Reading
+        day={item.day}
+        date={item.date}
+        time={item.time}
+        bp={[item.bp_sys, item.bp_dia]}
+        pr={item.pr}
+      />
+    ),
+    []
+  );
 
   return (
     <>
       <FlatList
         data={data}
-        renderItem={({ item }) => (
-          <Reading
-            day={item.day}
-            date={item.date}
-            time={item.time}
-            bp={[item.bp_sys, item.bp_dia]}
-            pr={item.pr}
-          />
-        )}
+        keyExtractor={(item) => `${item.id}`}
+        initialNumToRender={10}
+        renderItem={renderItem}
         style={{
           backgroundColor: colors[theme].primary,
+          paddingBottom: 86,
         }}
         contentContainerStyle={
-          data.length === 0 ? { flex: 1, justifyContent: "center" } : undefined
+          data.length === 0
+            ? { flex: 1, justifyContent: "center" }
+            : {
+                paddingBottom: 90,
+              }
         }
         ListEmptyComponent={
           <View
@@ -50,6 +93,11 @@ export default function Readings() {
           </View>
         }
       />
+      <TouchableNativeFeedback onPress={() => router.push("/readings/add")}>
+        <View style={styles.addFloatingButton}>
+          <MaterialIcons name='add' size={32} color={colors[theme].text} />
+        </View>
+      </TouchableNativeFeedback>
     </>
   );
 }
