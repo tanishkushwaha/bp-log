@@ -47,21 +47,20 @@ function TabsLayout() {
       />
 
       <Tabs.Screen
-        name='statistics'
-        options={{
-          title: "Statistics",
-          tabBarIcon: ({ focused }) => (
-            <TabBarIcon focused={focused} name='chart-bar' />
-          ),
-        }}
-      />
-
-      <Tabs.Screen
         name='charts'
         options={{
           title: "Charts",
           tabBarIcon: ({ focused }) => (
             <TabBarIcon focused={focused} name='chart-timeline-variant' />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name='analysis'
+        options={{
+          title: "Analysis",
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon focused={focused} name='flask-empty-outline' />
           ),
         }}
       />
