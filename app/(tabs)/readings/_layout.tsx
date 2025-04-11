@@ -1,4 +1,5 @@
 import PillButton from "@/components/PillButton";
+import ThreeDotMenu from "@/components/ThreeDotMenu";
 import { colors } from "@/theme/colors";
 import { useTheme } from "@/theme/ThemeContext";
 import { Stack } from "expo-router";
@@ -18,7 +19,10 @@ export default function Readingslayout() {
         headerTintColor: colors[theme].text,
       }}
     >
-      <Stack.Screen name='index' options={{ title: "Readings" }} />
+      <Stack.Screen
+        name='index'
+        options={{ title: "Readings", headerRight: () => <ThreeDotMenu /> }}
+      />
       <Stack.Screen
         name='add'
         options={{

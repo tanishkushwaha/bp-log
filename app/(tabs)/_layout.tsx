@@ -5,6 +5,7 @@ import { View, StyleSheet } from "react-native";
 import { colors } from "@/theme/colors";
 import { useTheme, ThemeProvider } from "@/theme/ThemeContext";
 import { BPDataProvider } from "@/contexts/BPDataContext";
+import ThreeDotMenu from "@/components/ThreeDotMenu";
 
 export default function TabsLayoutWrapper() {
   return (
@@ -33,6 +34,7 @@ function TabsLayout() {
         headerTitleStyle: {
           color: colors[theme].text,
         },
+        headerRight: () => <ThreeDotMenu />,
       }}
     >
       <Tabs.Screen
