@@ -1,7 +1,7 @@
 import { colors } from "@/theme/colors";
 import { useTheme } from "@/theme/ThemeContext";
 import { useMemo } from "react";
-import { View, Text, StyleSheet, TouchableNativeFeedback } from "react-native";
+import { View, Text, StyleSheet, Pressable } from "react-native";
 
 export default function PillButton({ title }: { title: string }) {
   const { theme } = useTheme();
@@ -17,6 +17,7 @@ export default function PillButton({ title }: { title: string }) {
           height: 32,
           minWidth: 64,
           borderRadius: 16,
+          overflow: "hidden",
         },
         buttonText: {
           color: colors[theme].text,
@@ -26,12 +27,21 @@ export default function PillButton({ title }: { title: string }) {
   );
 
   return (
-    <View>
-      <TouchableNativeFeedback>
-        <View style={styles.container}>
-          <Text style={styles.buttonText}>{title}</Text>
-        </View>
-      </TouchableNativeFeedback>
-    </View>
+    <Pressable
+      android_ripple={{
+        color: colors[theme].primary,
+        borderless: true,
+        foreground: true,
+        radius: 128,
+      }}
+      style={{
+        overflow: "hidden",
+        borderRadius: 20,
+      }}
+    >
+      <View style={styles.container}>
+        <Text style={styles.buttonText}>{title}</Text>
+      </View>
+    </Pressable>
   );
 }
