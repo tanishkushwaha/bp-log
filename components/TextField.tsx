@@ -4,6 +4,7 @@ import {
   StyleSheet,
   StyleProp,
   ViewStyle,
+  InputModeOptions,
 } from "react-native";
 import { useTheme } from "@/theme/ThemeContext";
 import { colors } from "@/theme/colors";
@@ -11,10 +12,19 @@ import { useMemo } from "react";
 
 type propsType = {
   placeholder: string;
+  value: string;
+  onChangeText: (val: string) => void;
   style?: StyleProp<ViewStyle>;
+  inputMode?: InputModeOptions | undefined;
 };
 
-export default function TextField({ placeholder, style }: propsType) {
+export default function TextField({
+  placeholder,
+  style,
+  value,
+  onChangeText,
+  inputMode,
+}: propsType) {
   const { theme } = useTheme();
 
   const styles = useMemo(
@@ -43,6 +53,9 @@ export default function TextField({ placeholder, style }: propsType) {
         style={styles.textInput}
         placeholder={placeholder}
         placeholderTextColor={colors[theme].text}
+        value={value}
+        onChangeText={onChangeText}
+        inputMode={inputMode}
       />
     </View>
   );

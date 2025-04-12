@@ -46,12 +46,8 @@ export default function PickerField({ title, onPress, style }: propsType) {
     []
   );
 
-  const handlePress = () => {
-    console.log("Pressed!");
-  };
-
   return (
-    <TouchableNativeFeedback onPress={handlePress}>
+    <TouchableNativeFeedback onPress={onPress}>
       <View style={[styles.container, style]}>
         <>
           <Text style={styles.title}>{title}</Text>
