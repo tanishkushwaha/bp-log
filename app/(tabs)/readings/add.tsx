@@ -1,11 +1,11 @@
 import { View, Text, StyleSheet } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTheme } from "@/theme/ThemeContext";
 import { colors } from "@/theme/colors";
 import PickerField from "@/components/PickerField";
 import TextField from "@/components/TextField";
 import DatePicker from "react-native-date-picker";
-import { FormDataType } from "@/contexts/FormDataContext";
+import { FormDataType, useFormData } from "@/contexts/FormDataContext";
 
 export default function Add() {
   const { theme } = useTheme();
@@ -13,6 +13,7 @@ export default function Add() {
   const [datePickerOpen, setDatePickerOpen] = useState(false);
   const [timePickerOpen, setTimePickerOpen] = useState(false);
 
+  // TODO: get rid of the state below and maintain it in the context instead
   const [formData, setFormData] = useState<FormDataType>({
     sys: "",
     dia: "",
@@ -20,6 +21,12 @@ export default function Add() {
     date: new Date(),
     time: new Date(),
   });
+
+  const { updateFormData } = useFormData();
+
+  useEffect(() => {
+    updateFormData(formData);
+  }, [formData]);
 
   const setDate = (val: Date) => {
     setFormData((prev): FormDataType => {
@@ -122,6 +129,7 @@ function DateTimePanel({
 }) {
   const { theme } = useTheme();
 
+  // TODO: clean up
   // const handleDateChange = (val: string) => {
   //   setFormData((prev): FormDataType => {
   //     return {

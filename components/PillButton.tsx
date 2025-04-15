@@ -3,7 +3,13 @@ import { useTheme } from "@/theme/ThemeContext";
 import { useMemo } from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
 
-export default function PillButton({ title }: { title: string }) {
+export default function PillButton({
+  title,
+  onPress,
+}: {
+  title: string;
+  onPress: () => void;
+}) {
   const { theme } = useTheme();
 
   const styles = useMemo(
@@ -38,6 +44,7 @@ export default function PillButton({ title }: { title: string }) {
         overflow: "hidden",
         borderRadius: 20,
       }}
+      onPress={onPress}
     >
       <View style={styles.container}>
         <Text style={styles.buttonText}>{title}</Text>

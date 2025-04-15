@@ -20,7 +20,7 @@ export default function Readings() {
   const { data, updateData, clearData } = useBPData();
 
   useEffect(() => {
-    mockBPData.map((data) => updateData(data));
+    // mockBPData.map((data) => updateData(data));
 
     // Clear the data when component dismounts
     return () => clearData();
