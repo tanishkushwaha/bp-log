@@ -1,14 +1,25 @@
 import { colors } from "@/theme/colors";
 import { useTheme } from "@/theme/ThemeContext";
 import { useMemo } from "react";
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Pressable,
+  StyleProp,
+  ViewStyle,
+} from "react-native";
 
 export default function PillButton({
   title,
   onPress,
+  backgroundColor,
+  textColor,
 }: {
   title: string;
   onPress: () => void;
+  backgroundColor?: string;
+  textColor?: string;
 }) {
   const { theme } = useTheme();
 
@@ -32,6 +43,7 @@ export default function PillButton({
     []
   );
 
+  // TODO: Fix the unregistering of button presses
   return (
     <Pressable
       android_ripple={{
@@ -46,8 +58,8 @@ export default function PillButton({
       }}
       onPress={onPress}
     >
-      <View style={styles.container}>
-        <Text style={styles.buttonText}>{title}</Text>
+      <View style={[styles.container, { backgroundColor: backgroundColor }]}>
+        <Text style={[styles.buttonText, { color: textColor }]}>{title}</Text>
       </View>
     </Pressable>
   );

@@ -5,7 +5,11 @@ import { colors } from "@/theme/colors";
 import PickerField from "@/components/PickerField";
 import TextField from "@/components/TextField";
 import DatePicker from "react-native-date-picker";
-import { FormDataType, useFormData } from "@/contexts/FormDataContext";
+import {
+  defaultFormState,
+  FormDataType,
+  useFormData,
+} from "@/contexts/FormDataContext";
 
 export default function Add() {
   const { theme } = useTheme();
@@ -13,20 +17,13 @@ export default function Add() {
   const [datePickerOpen, setDatePickerOpen] = useState(false);
   const [timePickerOpen, setTimePickerOpen] = useState(false);
 
-  // TODO: get rid of the state below and maintain it in the context instead
-  const [formData, setFormData] = useState<FormDataType>({
-    sys: "",
-    dia: "",
-    pulse: "",
-    date: new Date(),
-    time: new Date(),
-  });
-
-  const { updateFormData } = useFormData();
+  const { formData, setFormData } = useFormData();
 
   useEffect(() => {
-    updateFormData(formData);
-  }, [formData]);
+    return () => {
+      setFormData(defaultFormState);
+    };
+  }, []);
 
   const setDate = (val: Date) => {
     setFormData((prev): FormDataType => {
@@ -79,7 +76,6 @@ export default function Add() {
       <View style={styles.form}>
         <DateTimePanel
           formData={formData}
-          setFormData={setFormData}
           openDatePicker={openDatePicker}
           openTimePicker={openTimePicker}
         />
@@ -118,36 +114,13 @@ export default function Add() {
 
 function DateTimePanel({
   formData,
-  setFormData,
   openDatePicker,
   openTimePicker,
 }: {
   formData: FormDataType;
-  setFormData: React.Dispatch<React.SetStateAction<FormDataType>>;
   openDatePicker: () => void;
   openTimePicker: () => void;
 }) {
-  const { theme } = useTheme();
-
-  // TODO: clean up
-  // const handleDateChange = (val: string) => {
-  //   setFormData((prev): FormDataType => {
-  //     return {
-  //       ...prev,
-  //       date: val,
-  //     };
-  //   });
-  // };
-
-  // const handleTimeChange = (val: string) => {
-  //   setFormData((prev): FormDataType => {
-  //     return {
-  //       ...prev,
-  //       time: val,
-  //     };
-  //   });
-  // };
-
   const styles = React.useMemo(
     () =>
       StyleSheet.create({

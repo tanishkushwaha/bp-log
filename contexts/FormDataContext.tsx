@@ -9,20 +9,24 @@ type FormDataType = {
 };
 
 type FormDataContextType = {
-  formData: FormDataType | null;
-  updateFormData: (data: FormDataType) => void;
+  formData: FormDataType;
+  setFormData: React.Dispatch<React.SetStateAction<FormDataType>>;
 };
 const FormDataContext = createContext<FormDataContextType | null>(null);
 
-function FormDataProvider({ children }: { children: React.ReactNode }) {
-  const [formData, setData] = useState<FormDataType | null>(null);
+const defaultFormState: FormDataType = {
+  sys: "",
+  dia: "",
+  pulse: "",
+  date: new Date(),
+  time: new Date(),
+};
 
-  const updateFormData = (data: FormDataType) => {
-    setData(data);
-  };
+function FormDataProvider({ children }: { children: React.ReactNode }) {
+  const [formData, setFormData] = useState<FormDataType>(defaultFormState);
 
   return (
-    <FormDataContext.Provider value={{ formData, updateFormData }}>
+    <FormDataContext.Provider value={{ formData, setFormData }}>
       {children}
     </FormDataContext.Provider>
   );
@@ -35,4 +39,4 @@ const useFormData = () => {
   return context;
 };
 
-export { FormDataProvider, useFormData, FormDataType };
+export { FormDataProvider, useFormData, FormDataType, defaultFormState };
