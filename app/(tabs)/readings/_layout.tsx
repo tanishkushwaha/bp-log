@@ -7,6 +7,7 @@ import { FormDataProvider, useFormData } from "@/contexts/FormDataContext";
 import { BPDataType, useBPData } from "@/contexts/BPDataContext";
 import uuid from "react-native-uuid";
 import { useMemo } from "react";
+import { combineDateAndTime } from "@/utils/functions";
 
 export default function Readingslayout() {
   const { theme } = useTheme();
@@ -36,6 +37,14 @@ export default function Readingslayout() {
             headerRight: () => <SaveButton />,
           }}
         />
+
+        <Stack.Screen
+          name='[id]'
+          options={{
+            title: "Edit Reading",
+            headerRight: () => <SaveButton />,
+          }}
+        />
       </Stack>
     </FormDataProvider>
   );
@@ -54,18 +63,8 @@ function SaveButton() {
     if (formData && isValidForm) {
       const data: BPDataType = {
         id: uuid.v4(),
-        day: formData.date.toLocaleDateString("en-GB", {
-          weekday: "short",
-        }),
-        date: formData.date.toLocaleDateString("en-GB", {
-          day: "2-digit",
-          month: "short",
-        }),
-        time: formData.time.toLocaleTimeString("en-GB", {
-          hour: "2-digit",
-          minute: "2-digit",
-          hour12: true,
-        }),
+
+        date: combineDateAndTime(formData.date, formData.time),
         bp_sys: Number(formData.sys),
         bp_dia: Number(formData.dia),
         pr: Number(formData.pulse),

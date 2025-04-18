@@ -2,9 +2,7 @@ import { createContext, useContext, useState } from "react";
 
 type BPDataType = {
   id: string;
-  day: string;
-  date: string;
-  time: string;
+  date: Date;
   bp_sys: number;
   bp_dia: number;
   pr: number;
