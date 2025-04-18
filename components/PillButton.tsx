@@ -1,25 +1,16 @@
 import { colors } from "@/theme/colors";
 import { useTheme } from "@/theme/ThemeContext";
 import { useMemo } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Pressable,
-  StyleProp,
-  ViewStyle,
-} from "react-native";
+import { View, Text, StyleSheet, Pressable } from "react-native";
 
 export default function PillButton({
   title,
   onPress,
-  backgroundColor,
-  textColor,
+  disabled,
 }: {
   title: string;
   onPress: () => void;
-  backgroundColor?: string;
-  textColor?: string;
+  disabled?: boolean;
 }) {
   const { theme } = useTheme();
 
@@ -27,7 +18,9 @@ export default function PillButton({
     () =>
       StyleSheet.create({
         container: {
-          backgroundColor: colors[theme].focus,
+          backgroundColor: disabled
+            ? colors[theme].focus
+            : colors[theme].accent,
           justifyContent: "center",
           alignItems: "center",
           paddingHorizontal: 12,
@@ -37,13 +30,12 @@ export default function PillButton({
           overflow: "hidden",
         },
         buttonText: {
-          color: colors[theme].text,
+          color: disabled ? "gray" : colors[theme].primary,
         },
       }),
-    []
+    [disabled]
   );
 
-  // TODO: Fix the unregistering of button presses
   return (
     <Pressable
       android_ripple={{
@@ -56,10 +48,11 @@ export default function PillButton({
         overflow: "hidden",
         borderRadius: 20,
       }}
-      onPress={onPress}
+      onPressOut={onPress}
+      disabled={disabled}
     >
-      <View style={[styles.container, { backgroundColor: backgroundColor }]}>
-        <Text style={[styles.buttonText, { color: textColor }]}>{title}</Text>
+      <View style={styles.container}>
+        <Text style={styles.buttonText}>{title}</Text>
       </View>
     </Pressable>
   );

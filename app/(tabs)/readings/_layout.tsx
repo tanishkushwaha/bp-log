@@ -44,7 +44,6 @@ export default function Readingslayout() {
 function SaveButton() {
   const { formData } = useFormData();
   const { updateData } = useBPData();
-  const { theme } = useTheme();
 
   const isValidForm = useMemo((): boolean => {
     if (!formData.sys || !formData.dia || !formData.pulse) return false;
@@ -72,20 +71,12 @@ function SaveButton() {
         pr: Number(formData.pulse),
       };
       updateData(data);
-      console.log("BPData Updated!");
       router.back();
       return;
     }
-    console.log("Form data is missing!");
   };
 
   return (
-    // TODO: Add disabled state to the button
-    <PillButton
-      title='Save'
-      onPress={handlePress}
-      backgroundColor={isValidForm ? colors[theme].accent : colors[theme].focus}
-      textColor={isValidForm ? colors[theme].primary : colors[theme].text}
-    />
+    <PillButton title='Save' onPress={handlePress} disabled={!isValidForm} />
   );
 }
