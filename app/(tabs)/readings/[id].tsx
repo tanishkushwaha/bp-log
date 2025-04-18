@@ -1,10 +1,12 @@
 import { View, StyleSheet } from "react-native";
-import { useTheme } from "@/theme/ThemeContext";
-import { colors } from "@/theme/colors";
+import React, { useMemo } from "react";
+import { useLocalSearchParams } from "expo-router";
 import ReadingForm from "@/components/ReadingForm";
-import { useMemo } from "react";
+import { colors } from "@/theme/colors";
+import { useTheme } from "@/theme/ThemeContext";
 
-export default function AddReading() {
+export default function EditReading() {
+  const { id } = useLocalSearchParams();
   const { theme } = useTheme();
 
   const styles = useMemo(
@@ -20,7 +22,7 @@ export default function AddReading() {
 
   return (
     <View style={styles.container}>
-      <ReadingForm />
+      <ReadingForm itemId={id as string} />
     </View>
   );
 }

@@ -7,13 +7,15 @@ import {
   StyleSheet,
   Text,
   FlatList,
-  TouchableOpacity,
   TouchableNativeFeedback,
+  TouchableOpacity,
+  Pressable,
 } from "react-native";
 import { mockBPData } from "@/mockData";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { router } from "expo-router";
+import { opacity } from "react-native-reanimated/lib/typescript/Colors";
 
 export default function Readings() {
   const { theme } = useTheme();
@@ -47,19 +49,33 @@ export default function Readings() {
 
   const renderItem = useCallback(
     ({ item }: { item: BPDataType }) => (
-      <Reading
-        day={item.day}
-        date={item.date}
-        time={item.time}
-        bp={[item.bp_sys, item.bp_dia]}
-        pr={item.pr}
-      />
+      <Pressable
+        style={({ pressed }) => pressed && { opacity: 0.6 }}
+        onPress={() => router.push(`/readings/${item.id}`)}
+      >
+        <Reading
+          day={item.date.toLocaleDateString("en-GB", { weekday: "short" })}
+          date={item.date.toLocaleDateString("en-GB", {
+            day: "2-digit",
+            month: "short",
+            year: "2-digit",
+          })}
+          time={item.date.toLocaleTimeString("en-GB", {
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: true,
+          })}
+          bp={[item.bp_sys, item.bp_dia]}
+          pr={item.pr}
+        />
+      </Pressable>
     ),
     []
   );
 
   return (
     <>
+      {/* // TODO: Sort the list based on date and time */}
       <FlatList
         data={data}
         keyExtractor={(item) => `${item.id}`}
