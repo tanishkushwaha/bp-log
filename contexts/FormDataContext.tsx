@@ -14,16 +14,15 @@ type FormDataContextType = {
 };
 const FormDataContext = createContext<FormDataContextType | null>(null);
 
-const defaultFormState: FormDataType = {
-  sys: "",
-  dia: "",
-  pulse: "",
-  date: new Date(),
-  time: new Date(),
-};
-
 function FormDataProvider({ children }: { children: React.ReactNode }) {
-  const [formData, setFormData] = useState<FormDataType>(defaultFormState);
+  // TODO: Add null state to formData type
+  const [formData, setFormData] = useState<FormDataType>({
+    sys: "",
+    dia: "",
+    pulse: "",
+    date: new Date(),
+    time: new Date(),
+  });
 
   return (
     <FormDataContext.Provider value={{ formData, setFormData }}>
@@ -39,4 +38,4 @@ const useFormData = () => {
   return context;
 };
 
-export { FormDataProvider, useFormData, FormDataType, defaultFormState };
+export { FormDataProvider, useFormData, FormDataType };

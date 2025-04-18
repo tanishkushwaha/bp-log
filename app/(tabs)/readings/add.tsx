@@ -5,13 +5,11 @@ import { colors } from "@/theme/colors";
 import PickerField from "@/components/PickerField";
 import TextField from "@/components/TextField";
 import DatePicker from "react-native-date-picker";
-import {
-  defaultFormState,
-  FormDataType,
-  useFormData,
-} from "@/contexts/FormDataContext";
+import { FormDataType, useFormData } from "@/contexts/FormDataContext";
 
-export default function Add() {
+// TODO: Extract the form in a separate component
+
+export default function AddReading() {
   const { theme } = useTheme();
 
   const [datePickerOpen, setDatePickerOpen] = useState(false);
@@ -20,9 +18,13 @@ export default function Add() {
   const { formData, setFormData } = useFormData();
 
   useEffect(() => {
-    return () => {
-      setFormData(defaultFormState);
-    };
+    setFormData({
+      sys: "",
+      dia: "",
+      pulse: "",
+      date: new Date(),
+      time: new Date(),
+    });
   }, []);
 
   const setDate = (val: Date) => {
