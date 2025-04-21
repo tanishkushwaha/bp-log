@@ -8,14 +8,11 @@ import {
   Text,
   FlatList,
   TouchableNativeFeedback,
-  TouchableOpacity,
   Pressable,
 } from "react-native";
-import { mockBPData } from "@/mockData";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { router } from "expo-router";
-import { opacity } from "react-native-reanimated/lib/typescript/Colors";
 
 export default function Readings() {
   const { theme } = useTheme();

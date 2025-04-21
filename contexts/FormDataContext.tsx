@@ -15,7 +15,6 @@ type FormDataContextType = {
 const FormDataContext = createContext<FormDataContextType | null>(null);
 
 function FormDataProvider({ children }: { children: React.ReactNode }) {
-  // TODO: Add null state to formData type
   const [formData, setFormData] = useState<FormDataType>({
     sys: "",
     dia: "",

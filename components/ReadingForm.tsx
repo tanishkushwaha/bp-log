@@ -100,7 +100,7 @@ export default function ReadingForm({ itemId }: { itemId?: string }) {
           setDatePickerOpen(false);
         }}
       />
-      {/* // TODO: Make use of single date object */}
+
       <DatePicker
         modal
         mode='time'
