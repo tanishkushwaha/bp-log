@@ -10,7 +10,8 @@ type BPDataType = {
 
 type BPDataContextType = {
   data: BPDataType[];
-  updateData: (data: BPDataType) => void;
+  addData: (data: BPDataType) => void;
+  updateData: (id: string, data: BPDataType) => void;
   clearData: () => void;
 };
 
@@ -26,12 +27,16 @@ const useBPData = () => {
 const BPDataProvider = ({ children }: { children: React.ReactNode }) => {
   const [data, setData] = useState<BPDataType[]>([]);
 
-  const updateData = (data: BPDataType) => setData((prev) => [...prev, data]);
+  const addData = (data: BPDataType) => setData((prev) => [...prev, data]);
+
+  const updateData = (id: string, data: BPDataType) => {
+    setData((prev) => prev.map((item) => (item.id === id ? data : item)));
+  };
 
   const clearData = () => setData([]);
 
   return (
-    <BPDataContext.Provider value={{ data, updateData, clearData }}>
+    <BPDataContext.Provider value={{ data, addData, updateData, clearData }}>
       {children}
     </BPDataContext.Provider>
   );
