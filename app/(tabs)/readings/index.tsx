@@ -1,7 +1,7 @@
 import { BPDataType, useBPData } from "@/contexts/BPDataContext";
 import { colors, IndicatorColor } from "@/theme/colors";
 import { useTheme } from "@/theme/ThemeContext";
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -12,18 +12,24 @@ import {
 } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { router } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
+import { getAllBPData } from "@/utils/storage";
 
 export default function Readings() {
   const { theme } = useTheme();
-  const { data, addData, clearData } = useBPData();
+  const { data, clearData, setData } = useBPData();
+  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    // mockBPData.map((data) => addData(data));
-
-    // Clear the data when component dismounts
-    return () => clearData();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      setLoading(true);
+      getAllBPData().then((data) => {
+        setData(data);
+        setLoading(false);
+      });
+      return () => clearData();
+    }, [])
+  );
 
   const styles = useMemo(
     () =>

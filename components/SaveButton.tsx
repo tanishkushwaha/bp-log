@@ -1,21 +1,21 @@
-import { useBPData, BPDataType } from "@/contexts/BPDataContext";
+import { BPDataType } from "@/contexts/BPDataContext";
 import { useFormData } from "@/contexts/FormDataContext";
 import { combineDateAndTime } from "@/utils/functions";
 import { router } from "expo-router";
 import { useMemo } from "react";
 import uuid from "react-native-uuid";
 import PillButton from "./PillButton";
+import { storeBPData, updateBPData } from "@/utils/storage";
 
 export default function SaveButton({ itemId }: { itemId?: string }) {
   const { formData } = useFormData();
-  const { updateData, addData } = useBPData();
 
   const isValidForm = useMemo((): boolean => {
     if (!formData.sys || !formData.dia || !formData.pulse) return false;
     return true;
   }, [formData]);
 
-  const handlePress = () => {
+  const handlePress = async () => {
     if (formData && isValidForm) {
       if (!itemId) {
         const data: BPDataType = {
@@ -26,7 +26,7 @@ export default function SaveButton({ itemId }: { itemId?: string }) {
           bp_dia: Number(formData.dia),
           pr: Number(formData.pulse),
         };
-        addData(data);
+        await storeBPData(data);
         router.back();
         return;
       }
@@ -38,7 +38,7 @@ export default function SaveButton({ itemId }: { itemId?: string }) {
         bp_dia: Number(formData.dia),
         pr: Number(formData.pulse),
       };
-      updateData(itemId, data);
+      await updateBPData(itemId, data);
       router.back();
     }
   };
