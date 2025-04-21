@@ -19,10 +19,10 @@ import { opacity } from "react-native-reanimated/lib/typescript/Colors";
 
 export default function Readings() {
   const { theme } = useTheme();
-  const { data, updateData, clearData } = useBPData();
+  const { data, addData, clearData } = useBPData();
 
   useEffect(() => {
-    // mockBPData.map((data) => updateData(data));
+    // mockBPData.map((data) => addData(data));
 
     // Clear the data when component dismounts
     return () => clearData();
@@ -58,7 +58,6 @@ export default function Readings() {
           date={item.date.toLocaleDateString("en-GB", {
             day: "2-digit",
             month: "short",
-            year: "2-digit",
           })}
           time={item.date.toLocaleTimeString("en-GB", {
             hour: "2-digit",
@@ -73,11 +72,14 @@ export default function Readings() {
     []
   );
 
+  const sortedDataByDate = useMemo(() => {
+    return [...data].sort((a, b) => b.date.getTime() - a.date.getTime());
+  }, [data]);
+
   return (
     <>
-      {/* // TODO: Sort the list based on date and time */}
       <FlatList
-        data={data}
+        data={sortedDataByDate}
         keyExtractor={(item) => `${item.id}`}
         initialNumToRender={10}
         renderItem={renderItem}
