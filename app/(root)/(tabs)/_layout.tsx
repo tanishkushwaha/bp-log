@@ -3,17 +3,15 @@ import { Tabs } from "expo-router";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { View, StyleSheet } from "react-native";
 import { colors } from "@/theme/colors";
-import { useTheme, ThemeProvider } from "@/theme/ThemeContext";
+import { useTheme } from "@/theme/ThemeContext";
 import { BPDataProvider } from "@/contexts/BPDataContext";
 import ThreeDotMenu from "@/components/ThreeDotMenu";
 
 export default function TabsLayoutWrapper() {
   return (
-    <ThemeProvider>
-      <BPDataProvider>
-        <TabsLayout />
-      </BPDataProvider>
-    </ThemeProvider>
+    <BPDataProvider>
+      <TabsLayout />
+    </BPDataProvider>
   );
 }
 

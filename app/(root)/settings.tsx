@@ -1,10 +1,10 @@
 import { View, Text } from "react-native";
 import React from "react";
 
-export default function charts() {
+export default function settings() {
   return (
     <View>
-      <Text>charts</Text>
+      <Text>settings</Text>
     </View>
   );
 }

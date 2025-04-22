@@ -2,7 +2,15 @@ import React, { useMemo, useState } from "react";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { useTheme } from "@/theme/ThemeContext";
 import { colors } from "@/theme/colors";
-import { View, StyleSheet, Modal, Pressable, Text } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Modal,
+  Pressable,
+  Text,
+  TouchableNativeFeedback,
+} from "react-native";
+import { router } from "expo-router";
 
 export default function ThreeDotMenu() {
   const { theme } = useTheme();
@@ -69,7 +77,11 @@ export default function ThreeDotMenu() {
         <Pressable style={styles.overlay} onPress={() => setMenuVisible(false)}>
           <View style={styles.menu}>
             <View style={styles.menuItem}>
-              <Text style={styles.menuItemText}>Settings</Text>
+              <TouchableNativeFeedback
+                onPress={() => router.push("/(root)/settings")}
+              >
+                <Text style={styles.menuItemText}>Settings</Text>
+              </TouchableNativeFeedback>
             </View>
           </View>
         </Pressable>
