@@ -17,7 +17,7 @@ export default function EditReading() {
           flex: 1,
         },
       }),
-    []
+    [theme]
   );
 
   return (

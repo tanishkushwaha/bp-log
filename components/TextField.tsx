@@ -44,7 +44,7 @@ export default function TextField({
           color: colors[theme].text,
         },
       }),
-    []
+    [theme]
   );
 
   return (

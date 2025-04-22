@@ -43,7 +43,7 @@ export default function PickerField({ title, onPress, style }: propsType) {
           color: colors[theme].text,
         },
       }),
-    []
+    [theme]
   );
 
   return (

@@ -47,7 +47,7 @@ export default function Readings() {
           elevation: 4,
         },
       }),
-    []
+    [theme]
   );
 
   const renderItem = useCallback(

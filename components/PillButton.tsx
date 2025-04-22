@@ -33,7 +33,7 @@ export default function PillButton({
           color: disabled ? "gray" : colors[theme].primary,
         },
       }),
-    [disabled]
+    [theme, disabled]
   );
 
   return (

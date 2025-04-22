@@ -15,7 +15,7 @@ export default function AddReading() {
           flex: 1,
         },
       }),
-    []
+    [theme]
   );
 
   return (

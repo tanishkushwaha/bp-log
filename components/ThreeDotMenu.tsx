@@ -43,7 +43,7 @@ export default function ThreeDotMenu() {
           flex: 1,
         },
       }),
-    []
+    [theme]
   );
 
   return (

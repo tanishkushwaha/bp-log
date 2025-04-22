@@ -220,7 +220,7 @@ function BPPanel({
           top: 18,
         },
       }),
-    []
+    [theme]
   );
 
   return (
