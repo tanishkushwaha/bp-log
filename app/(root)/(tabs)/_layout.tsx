@@ -6,11 +6,14 @@ import { colors } from "@/theme/colors";
 import { useTheme } from "@/theme/ThemeContext";
 import { BPDataProvider } from "@/contexts/BPDataContext";
 import ThreeDotMenu from "@/components/ThreeDotMenu";
+import { RefreshKeyProvider } from "@/contexts/RefreshKeyContext";
 
 export default function TabsLayoutWrapper() {
   return (
     <BPDataProvider>
-      <TabsLayout />
+      <RefreshKeyProvider>
+        <TabsLayout />
+      </RefreshKeyProvider>
     </BPDataProvider>
   );
 }

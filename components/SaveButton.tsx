@@ -6,9 +6,11 @@ import { useMemo } from "react";
 import uuid from "react-native-uuid";
 import PillButton from "./PillButton";
 import { storeBPData, updateBPData } from "@/utils/storage";
+import { useRefreshKey } from "@/contexts/RefreshKeyContext";
 
 export default function SaveButton({ itemId }: { itemId?: string }) {
   const { formData } = useFormData();
+  const { updateRefreshKey } = useRefreshKey();
 
   const isValidForm = useMemo((): boolean => {
     if (!formData.sys || !formData.dia || !formData.pulse) return false;
@@ -27,6 +29,7 @@ export default function SaveButton({ itemId }: { itemId?: string }) {
           pr: Number(formData.pulse),
         };
         await storeBPData(data);
+        updateRefreshKey();
         router.back();
         return;
       }
@@ -39,6 +42,7 @@ export default function SaveButton({ itemId }: { itemId?: string }) {
         pr: Number(formData.pulse),
       };
       await updateBPData(itemId, data);
+      updateRefreshKey();
       router.back();
     }
   };

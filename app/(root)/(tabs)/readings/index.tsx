@@ -14,13 +14,14 @@ import {
   TouchableNativeFeedback,
   Pressable,
 } from "react-native";
+import { useRefreshKey } from "@/contexts/RefreshKeyContext";
 
 export default function Readings() {
   const { theme } = useTheme();
   const { data, clearData, setData } = useBPData();
   const [loading, setLoading] = useState(true);
+  const { refreshKey } = useRefreshKey();
 
-  // TODO: Add a refreshKey context so that data only loads from the storage only when there's a change
   useFocusEffect(
     useCallback(() => {
       setLoading(true);
@@ -28,7 +29,7 @@ export default function Readings() {
         setData(data);
         setLoading(false);
       });
-    }, [])
+    }, [refreshKey])
   );
 
   const styles = useMemo(

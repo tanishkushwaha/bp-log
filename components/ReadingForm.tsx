@@ -10,6 +10,7 @@ import { useBPData } from "@/contexts/BPDataContext";
 import ConfirmationModal from "./ConfirmationModal";
 import { deleteBPData } from "@/utils/storage";
 import { router } from "expo-router";
+import { useRefreshKey } from "@/contexts/RefreshKeyContext";
 
 export default function ReadingForm({ itemId }: { itemId?: string }) {
   // Modal States
@@ -19,6 +20,7 @@ export default function ReadingForm({ itemId }: { itemId?: string }) {
 
   const { formData, setFormData } = useFormData();
   const { data } = useBPData();
+  const { updateRefreshKey } = useRefreshKey();
 
   useEffect(() => {
     const selectedReading = data.find((item) => item.id === itemId);
@@ -104,8 +106,9 @@ export default function ReadingForm({ itemId }: { itemId?: string }) {
           <ConfirmationModal
             visible={deleteConfModalOpen}
             onRequestClose={() => setDeleteConfModalOpen(false)}
-            onConfirm={() => {
-              deleteBPData(itemId);
+            onConfirm={async () => {
+              await deleteBPData(itemId);
+              updateRefreshKey();
               setDeleteConfModalOpen(false);
               router.back();
             }}
