@@ -52,7 +52,7 @@ export default function charts() {
           color: colors[theme].text,
         },
       }),
-    []
+    [theme]
   );
 
   // TODO: Add time range picker for the charts
