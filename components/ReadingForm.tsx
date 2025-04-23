@@ -91,7 +91,7 @@ export default function ReadingForm({ itemId }: { itemId?: string }) {
         openTimePicker={openTimePicker}
       />
       <BPPanel formData={formData} setFormData={setFormData} />
-      {/* // TODO: Add confirmation modal */}
+
       {itemId && (
         <>
           <View style={{ marginTop: 48 }}>
@@ -112,6 +112,7 @@ export default function ReadingForm({ itemId }: { itemId?: string }) {
           />
         </>
       )}
+
       {/* Modals */}
       <DatePicker
         modal

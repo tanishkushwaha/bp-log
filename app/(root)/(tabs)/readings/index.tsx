@@ -2,6 +2,10 @@ import { BPDataType, useBPData } from "@/contexts/BPDataContext";
 import { colors, IndicatorColor } from "@/theme/colors";
 import { useTheme } from "@/theme/ThemeContext";
 import { useCallback, useMemo, useState } from "react";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { router, useFocusEffect } from "expo-router";
+import { getAllBPData } from "@/utils/storage";
 import {
   View,
   StyleSheet,
@@ -10,16 +14,13 @@ import {
   TouchableNativeFeedback,
   Pressable,
 } from "react-native";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { router, useFocusEffect } from "expo-router";
-import { getAllBPData } from "@/utils/storage";
 
 export default function Readings() {
   const { theme } = useTheme();
   const { data, clearData, setData } = useBPData();
   const [loading, setLoading] = useState(true);
 
+  // TODO: Add a refreshKey context so that data only loads from the storage only when there's a change
   useFocusEffect(
     useCallback(() => {
       setLoading(true);
@@ -27,7 +28,6 @@ export default function Readings() {
         setData(data);
         setLoading(false);
       });
-      return () => clearData();
     }, [])
   );
 

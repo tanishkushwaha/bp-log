@@ -46,6 +46,9 @@ export default function Settings() {
     <View style={styles.screenContainer}>
       <DarkModeOption />
       <HorizontalRule />
+      {/* //TODO: Add export to csv/pdf */}
+
+      {/* Modals */}
       <Modal
         transparent={true}
         visible={themeModalVisible}

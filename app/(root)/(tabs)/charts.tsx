@@ -1,13 +1,14 @@
 import { View } from "react-native";
 import { useTheme } from "@/theme/ThemeContext";
 import { colors } from "@/theme/colors";
-import { mockBPData } from "@/mockData";
 import { CartesianChart, Line, useChartPressState } from "victory-native";
 import { Circle, useFont, Line as DrawLine } from "@shopify/react-native-skia";
 import { SharedValue } from "react-native-reanimated";
+import { useBPData } from "@/contexts/BPDataContext";
 
 export default function charts() {
   const { theme } = useTheme();
+  const { data } = useBPData();
   const font = useFont(require("@/assets/fonts/SpaceMono-Regular.ttf"));
 
   const { state, isActive } = useChartPressState({
@@ -17,6 +18,9 @@ export default function charts() {
       bp_dia: 0,
     },
   });
+
+  // TODO: Add legend
+  // TODO: Add time range picker for the charts
 
   return (
     <View
@@ -31,8 +35,8 @@ export default function charts() {
           chartPressState={state}
           padding={18}
           domainPadding={2}
-          data={mockBPData}
-          xKey='date'
+          data={data}
+          xKey='id'
           yKeys={["bp_sys", "bp_dia"]}
           yAxis={[
             {
