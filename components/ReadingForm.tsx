@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Button } from "react-native";
 import React, { useEffect, useState } from "react";
 import TextField from "./TextField";
 import { colors } from "@/theme/colors";
@@ -7,10 +7,15 @@ import { useFormData, FormDataType } from "@/contexts/FormDataContext";
 import DatePicker from "react-native-date-picker";
 import PickerField from "./PickerField";
 import { useBPData } from "@/contexts/BPDataContext";
+import ConfirmationModal from "./ConfirmationModal";
+import { deleteBPData } from "@/utils/storage";
+import { router } from "expo-router";
 
 export default function ReadingForm({ itemId }: { itemId?: string }) {
+  // Modal States
   const [datePickerOpen, setDatePickerOpen] = useState(false);
   const [timePickerOpen, setTimePickerOpen] = useState(false);
+  const [deleteConfModalOpen, setDeleteConfModalOpen] = useState(false);
 
   const { formData, setFormData } = useFormData();
   const { data } = useBPData();
@@ -58,6 +63,7 @@ export default function ReadingForm({ itemId }: { itemId?: string }) {
   // Modal openers
   const openDatePicker = () => setDatePickerOpen(true);
   const openTimePicker = () => setTimePickerOpen(true);
+
   const styles = React.useMemo(
     () =>
       StyleSheet.create({
@@ -85,7 +91,27 @@ export default function ReadingForm({ itemId }: { itemId?: string }) {
         openTimePicker={openTimePicker}
       />
       <BPPanel formData={formData} setFormData={setFormData} />
-
+      {/* // TODO: Add confirmation modal */}
+      {itemId && (
+        <>
+          <View style={{ marginTop: 48 }}>
+            <Button
+              title='Delete Reading'
+              color={colors.indicator.red}
+              onPress={() => setDeleteConfModalOpen(true)}
+            />
+          </View>
+          <ConfirmationModal
+            visible={deleteConfModalOpen}
+            onRequestClose={() => setDeleteConfModalOpen(false)}
+            onConfirm={() => {
+              deleteBPData(itemId);
+              setDeleteConfModalOpen(false);
+              router.back();
+            }}
+          />
+        </>
+      )}
       {/* Modals */}
       <DatePicker
         modal
@@ -100,7 +126,6 @@ export default function ReadingForm({ itemId }: { itemId?: string }) {
           setDatePickerOpen(false);
         }}
       />
-
       <DatePicker
         modal
         mode='time'
