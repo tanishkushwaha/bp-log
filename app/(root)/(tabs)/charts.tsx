@@ -1,10 +1,11 @@
-import { View } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 import { useTheme } from "@/theme/ThemeContext";
 import { colors } from "@/theme/colors";
 import { CartesianChart, Line, useChartPressState } from "victory-native";
-import { Circle, useFont, Line as DrawLine } from "@shopify/react-native-skia";
+import { useFont, Line as DrawLine } from "@shopify/react-native-skia";
 import { SharedValue } from "react-native-reanimated";
 import { useBPData } from "@/contexts/BPDataContext";
+import { useMemo } from "react";
 
 export default function charts() {
   const { theme } = useTheme();
@@ -19,17 +20,45 @@ export default function charts() {
     },
   });
 
-  // TODO: Add legend
+  const styles = useMemo(
+    () =>
+      StyleSheet.create({
+        screenContainer: {
+          backgroundColor: colors[theme].primary,
+          flex: 1,
+          justifyContent: "center",
+        },
+        legend: {
+          width: 196,
+          padding: 16,
+          backgroundColor: colors[theme].secondary,
+          alignSelf: "center",
+          alignItems: "center",
+          gap: 16,
+          borderRadius: 16,
+        },
+        itemContainer: {
+          flexDirection: "row",
+          alignItems: "center",
+          paddingHorizontal: 16,
+          gap: 16,
+          width: 128,
+        },
+        lineSymbol: {
+          width: 16,
+          height: 1,
+        },
+        label: {
+          color: colors[theme].text,
+        },
+      }),
+    []
+  );
+
   // TODO: Add time range picker for the charts
 
   return (
-    <View
-      style={{
-        backgroundColor: colors[theme].primary,
-        flex: 1,
-        justifyContent: "center",
-      }}
-    >
+    <View style={styles.screenContainer}>
       <View style={{ height: 240 }}>
         <CartesianChart
           chartPressState={state}
@@ -52,7 +81,7 @@ export default function charts() {
             <>
               <Line
                 points={points.bp_sys}
-                color={colors.indicator.orange}
+                color={colors.indicator.deepOrange}
                 strokeWidth={1}
                 animate={{ type: "timing", duration: 300 }}
                 curveType='natural'
@@ -74,6 +103,26 @@ export default function charts() {
             </>
           )}
         </CartesianChart>
+      </View>
+      <View style={styles.legend}>
+        <View style={styles.itemContainer}>
+          <View
+            style={[
+              styles.lineSymbol,
+              { backgroundColor: colors.indicator.deepOrange },
+            ]}
+          />
+          <Text style={styles.label}>Systolic</Text>
+        </View>
+        <View style={styles.itemContainer}>
+          <View
+            style={[
+              styles.lineSymbol,
+              { backgroundColor: colors.indicator.green },
+            ]}
+          />
+          <Text style={styles.label}>Diastolic</Text>
+        </View>
       </View>
     </View>
   );
