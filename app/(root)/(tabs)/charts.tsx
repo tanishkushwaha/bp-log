@@ -4,13 +4,48 @@ import { colors } from "@/theme/colors";
 import { CartesianChart, Line, useChartPressState } from "victory-native";
 import { useFont, Line as DrawLine } from "@shopify/react-native-skia";
 import { SharedValue } from "react-native-reanimated";
-import { useBPData } from "@/contexts/BPDataContext";
-import { useMemo } from "react";
+import { BPDataType, useBPData } from "@/contexts/BPDataContext";
+import { useMemo, useState } from "react";
+import ComboBox from "@/components/ComboBox";
+
+type ComboOptions = "last7Days" | "last14Days" | "last30Days" | "allTime";
+type ComboItem = {
+  label: string;
+  value: ComboOptions;
+};
 
 export default function charts() {
   const { theme } = useTheme();
   const { data } = useBPData();
   const font = useFont(require("@/assets/fonts/SpaceMono-Regular.ttf"));
+
+  const [comboValue, setComboValue] = useState<ComboOptions>("allTime");
+
+  const [comboItems, setComboItems] = useState<ComboItem[]>([
+    { label: "Last 7 days", value: "last7Days" },
+    { label: "Last 14 days", value: "last14Days" },
+    { label: "Last 30 days", value: "last30Days" },
+    { label: "All time", value: "allTime" },
+  ]);
+
+  // Filtered data based on combo box value
+  const filteredData: BPDataType[] = useMemo(() => {
+    if (comboValue === "allTime") return data;
+
+    const now = new Date();
+
+    const daysMap: Record<"last7Days" | "last14Days" | "last30Days", number> = {
+      last7Days: 7,
+      last14Days: 14,
+      last30Days: 30,
+    };
+
+    const days = daysMap[comboValue];
+
+    const daysAgo = new Date(now.getTime() - days * 24 * 60 * 60 * 1000);
+
+    return data.filter((item) => item.date >= daysAgo && item.date <= now);
+  }, [data, comboValue]);
 
   const { state, isActive } = useChartPressState({
     x: "",
@@ -55,16 +90,20 @@ export default function charts() {
     [theme]
   );
 
-  // TODO: Add time range picker for the charts
-
   return (
     <View style={styles.screenContainer}>
+      <ComboBox
+        value={comboValue}
+        setValue={setComboValue}
+        items={comboItems}
+        setItems={setComboItems}
+      />
       <View style={{ height: 240 }}>
         <CartesianChart
           chartPressState={state}
           padding={18}
           domainPadding={2}
-          data={data}
+          data={filteredData}
           xKey='id'
           yKeys={["bp_sys", "bp_dia"]}
           yAxis={[
