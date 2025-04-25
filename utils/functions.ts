@@ -1,4 +1,5 @@
 import { BPDataType } from "@/contexts/BPDataContext";
+import { IndicatorColor, colors } from "@/theme/colors";
 import uuid from "react-native-uuid";
 
 export const combineDateAndTime = (dateObj: Date, timeObj: Date): Date => {
@@ -27,4 +28,21 @@ export const generateMockBPData = (days: number = 60): BPDataType[] => {
   }
 
   return data;
+};
+
+export const getBpIndicatorColor = (
+  sys: number,
+  dia: number
+): IndicatorColor => {
+  if (sys < 120 && dia <= 80) {
+    return colors.indicator.green; // Normal
+  } else if (sys < 130 && dia < 80) {
+    return colors.indicator.yellow; // Elevated
+  } else if (sys < 140 && dia < 90) {
+    return colors.indicator.orange; // Hypertension Stage 1
+  } else if (sys < 180 && dia <= 120) {
+    return colors.indicator.deepOrange; // Hypertension Stage 2
+  } else {
+    return colors.indicator.red; // Hypertensive Crisis
+  }
 };

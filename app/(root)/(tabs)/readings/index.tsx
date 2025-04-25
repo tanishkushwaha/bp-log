@@ -15,6 +15,7 @@ import {
   Pressable,
 } from "react-native";
 import { useRefreshKey } from "@/contexts/RefreshKeyContext";
+import { getBpIndicatorColor } from "@/utils/functions";
 
 export default function Readings() {
   const { theme } = useTheme();
@@ -135,21 +136,6 @@ type ReadingProps = {
 const Reading = ({ day, date, time, bp, pr }: ReadingProps) => {
   const { theme } = useTheme();
 
-  // BP indicator color based on BP
-  const getBpColor = (sys: number, dia: number): IndicatorColor => {
-    if (sys <= 120 && dia <= 80) {
-      return colors.indicator.green; // Normal
-    } else if (sys < 130 && dia < 80) {
-      return colors.indicator.yellow; // Elevated
-    } else if (sys < 140 && dia < 90) {
-      return colors.indicator.orange; // Hypertension Stage 1
-    } else if (sys <= 180 && dia <= 120) {
-      return colors.indicator.deepOrange; // Hypertension Stage 2
-    } else {
-      return colors.indicator.red; // Hypertensive Crisis
-    }
-  };
-
   const styles = useMemo(
     () =>
       StyleSheet.create({
@@ -167,7 +153,7 @@ const Reading = ({ day, date, time, bp, pr }: ReadingProps) => {
           alignItems: "flex-end",
         },
         ind: {
-          backgroundColor: getBpColor(bp[0], bp[1]),
+          backgroundColor: getBpIndicatorColor(bp[0], bp[1]),
           height: 50,
           width: 3,
           marginHorizontal: 10,
