@@ -17,7 +17,7 @@ import {
 import { useRefreshKey } from "@/contexts/RefreshKeyContext";
 import { getBpIndicatorColor } from "@/utils/functions";
 
-export default function Readings() {
+export default function ReadingsScreen() {
   const { theme } = useTheme();
   const { data, clearData, setData } = useBPData();
   const [loading, setLoading] = useState(true);
@@ -204,7 +204,7 @@ const Reading = ({ day, date, time, bp, pr }: ReadingProps) => {
   );
 
   return (
-    <View style={styles.container}>
+    <View testID='reading-item' style={styles.container}>
       <View style={styles.date}>
         <Text style={styles.dayText}>{day}</Text>
         <Text style={styles.dateText}>{date}</Text>

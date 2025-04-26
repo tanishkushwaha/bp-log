@@ -11,7 +11,7 @@ import { useTheme } from "@/theme/ThemeContext";
 import { colors } from "@/theme/colors";
 import HorizontalRule from "@/components/HorizontalRule";
 
-export default function Settings() {
+export default function SettingsScreen() {
   const [themeModalVisible, setThemeModalVisible] = useState(false);
 
   const { theme } = useTheme();

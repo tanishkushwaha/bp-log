@@ -1,9 +1,9 @@
 import { View, Text } from "react-native";
 
-export default function analysis() {
+export default function AnalysisScreen() {
   return (
     <View>
-      <Text>analysis</Text>
+      <Text>Analysis</Text>
     </View>
   );
 }

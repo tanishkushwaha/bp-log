@@ -14,7 +14,7 @@ type ComboItem = {
   value: ComboOptions;
 };
 
-export default function charts() {
+export default function ChartsScreen() {
   const { theme } = useTheme();
   const { data } = useBPData();
   const font = useFont(require("@/assets/fonts/SpaceMono-Regular.ttf"));

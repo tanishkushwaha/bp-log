@@ -5,7 +5,7 @@ import ReadingForm from "@/components/ReadingForm";
 import { colors } from "@/theme/colors";
 import { useTheme } from "@/theme/ThemeContext";
 
-export default function EditReading() {
+export default function EditReadingScreen() {
   const { id } = useLocalSearchParams();
   const { theme } = useTheme();
 

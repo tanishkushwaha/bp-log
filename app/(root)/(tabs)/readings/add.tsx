@@ -4,7 +4,7 @@ import { colors } from "@/theme/colors";
 import ReadingForm from "@/components/ReadingForm";
 import { useMemo } from "react";
 
-export default function AddReading() {
+export default function AddReadingScreen() {
   const { theme } = useTheme();
 
   const styles = useMemo(
