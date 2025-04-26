@@ -1,5 +1,5 @@
 import { colors } from "@/theme/colors";
-import { generateMockBPData, getBpIndicatorColor } from "./functions";
+import { generateMockBPData, getBpIndicatorColor } from "@/utils/functions";
 
 describe("generateMockBPData", () => {
   test("returns array of specified length", () => {
