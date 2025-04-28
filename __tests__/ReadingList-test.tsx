@@ -11,13 +11,7 @@ describe("<ReadingList />", () => {
       { id: "1", date: new Date(), bp_sys: 130, bp_dia: 85, pr: 75 },
     ];
 
-    const wrapper = ({ children }: { children: ReactNode }) => {
-      return <ThemeProvider>{children}</ThemeProvider>;
-    };
-
-    const { getAllByTestId } = render(<ReadingList data={mockData} />, {
-      wrapper,
-    });
+    const { getAllByTestId } = render(<ReadingList data={mockData} />);
 
     const items = getAllByTestId("reading-item");
 
@@ -29,13 +23,7 @@ describe("<ReadingList />", () => {
   });
 
   test("renders correct text for empty list", () => {
-    const wrapper = ({ children }: { children: ReactNode }) => {
-      return <ThemeProvider>{children}</ThemeProvider>;
-    };
-
-    const { getByText } = render(<ReadingList data={[]} />, {
-      wrapper,
-    });
+    const { getByText } = render(<ReadingList data={[]} />);
 
     expect(getByText("No Readings Yet"));
   });

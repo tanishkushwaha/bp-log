@@ -7,7 +7,13 @@ import { router } from "expo-router";
 import { useTheme } from "@/theme/ThemeContext";
 import { getBpIndicatorColor } from "@/utils/functions";
 
-export default function ReadingList({ data }: { data: BPDataType[] }) {
+export default function ReadingList({
+  data,
+  testId,
+}: {
+  data: BPDataType[];
+  testId?: string;
+}) {
   const { theme } = useTheme();
 
   const renderItem = useCallback(
@@ -59,6 +65,7 @@ export default function ReadingList({ data }: { data: BPDataType[] }) {
             alignItems: "center",
             flex: 1,
           }}
+          testID={testId}
         >
           <Ionicons
             name='document-text-outline'

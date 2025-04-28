@@ -35,10 +35,14 @@ export default function ReadingsScreen() {
     <>
       {loading ? (
         <View style={styles.spinnerContainer}>
-          <ActivityIndicator size='large' color={colors[theme].focus} />
+          <ActivityIndicator
+            size='large'
+            color={colors[theme].focus}
+            testID='spinner'
+          />
         </View>
       ) : (
-        <ReadingList data={sortedDataByDate} />
+        <ReadingList data={sortedDataByDate} testId='reading-list' />
       )}
       <FloatingAddButton />
     </>
