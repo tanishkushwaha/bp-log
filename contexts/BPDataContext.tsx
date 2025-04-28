@@ -28,6 +28,7 @@ const BPDataProvider = ({ children }: { children: React.ReactNode }) => {
 
   const clearData = () => setData([]);
 
+  // TODO: Analyze if clearData is necessary or not
   return (
     <BPDataContext.Provider value={{ data, clearData, setData }}>
       {children}
