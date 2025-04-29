@@ -12,6 +12,8 @@ import { deleteBPData } from "@/utils/storage";
 import { router } from "expo-router";
 import { useRefreshKey } from "@/contexts/RefreshKeyContext";
 
+// TODO: Refactor for tests
+
 export default function ReadingForm({ itemId }: { itemId?: string }) {
   // Modal States
   const [datePickerOpen, setDatePickerOpen] = useState(false);
