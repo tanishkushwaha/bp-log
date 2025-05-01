@@ -1,0 +1,19 @@
+{
+  "name": "starter-template",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/main.js",
+  "type": "module",
+  "scripts": {
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "node-appwrite": "^14.1.0",
+    "openai": "^4.96.2",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "prettier": "^3.2.5"
+  }
+}
