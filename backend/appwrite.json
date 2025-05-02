@@ -1,25 +1,21 @@
 {
-    "projectId": "6811ad2cd30f443e7e05",
-    "functions": [
-        {
-            "$id": "6811ae5a003a806124da",
-            "name": "ai-analysis",
-            "runtime": "node-22",
-            "specification": "s-0.5vcpu-512mb",
-            "execute": [
-                "any"
-            ],
-            "events": [],
-            "scopes": [
-                "users.read"
-            ],
-            "schedule": "",
-            "timeout": 15,
-            "enabled": true,
-            "logging": true,
-            "entrypoint": "src/main.js",
-            "commands": "npm install",
-            "path": "functions/ai-analysis"
-        }
-    ]
+  "projectId": "6811ad2cd30f443e7e05",
+  "functions": [
+    {
+      "$id": "6811ae5a003a806124da",
+      "name": "ai-analysis",
+      "runtime": "node-22",
+      "specification": "s-0.5vcpu-512mb",
+      "execute": ["any"],
+      "events": [],
+      "scopes": ["users.read"],
+      "schedule": "",
+      "timeout": 15,
+      "enabled": true,
+      "logging": true,
+      "entrypoint": "dist/main.js",
+      "commands": "npm install",
+      "path": "functions/ai-analysis"
+    }
+  ]
 }
