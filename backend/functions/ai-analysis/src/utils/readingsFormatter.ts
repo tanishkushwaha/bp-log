@@ -1,8 +1,10 @@
-export const readingsFormatter = (readings: any) => {
+import type { BPDataType } from '../types.js';
+
+export const readingsFormatter = (readings: BPDataType[]) => {
   return readings
-    .map((r: any) => {
-      const date = new Date(r.date).toLocaleDateString();
-      return `Date: ${date} | Systolic: ${r.bp_sys} | Diastolic: ${r.bp_dia} | Pulse: ${r.pr}`;
+    .map((reading: BPDataType) => {
+      const date = new Date(reading.date).toLocaleDateString();
+      return `Date: ${date} | Systolic: ${reading.bp_sys} | Diastolic: ${reading.bp_dia} | Pulse: ${reading.pr}`;
     })
     .join('\n');
 };

@@ -14,7 +14,7 @@
       "enabled": true,
       "logging": true,
       "entrypoint": "dist/main.js",
-      "commands": "npm install",
+      "commands": "npm install && npm run build",
       "path": "functions/ai-analysis"
     }
   ]
