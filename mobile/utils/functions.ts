@@ -1,6 +1,7 @@
 import { BPDataType } from "@/contexts/BPDataContext";
 import { IndicatorColor, colors } from "@/theme/colors";
 import uuid from "react-native-uuid";
+import { Dimensions } from "react-native";
 
 export const combineDateAndTime = (dateObj: Date, timeObj: Date): Date => {
   const res = new Date(dateObj);
@@ -46,3 +47,9 @@ export const getBpIndicatorColor = (
     return colors.indicator.red; // Hypertensive Crisis
   }
 };
+
+export const scale = (size: number): number =>
+  (Dimensions.get("screen").width / 412) * size;
+
+export const verticalScale = (size: number): number =>
+  (Dimensions.get("screen").height / 917) * size;
