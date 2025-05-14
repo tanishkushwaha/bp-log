@@ -1,12 +1,17 @@
 import OpenAI from 'openai';
 import { readingsFormatter } from '../utils/readingsFormatter.js';
 import readingsValidator from '../utils/readingsValidator.js';
+import prompt from '../prompt.js';
+import parseAiResponse from '../utils/parseAiResponse.js';
 
-const postRoutes: Record<string, (req: any, res: any) => any> = {};
+const postRoutes: Record<
+  string,
+  (req: any, res: any, log: any, error: any) => any
+> = {};
 
 export const handlePost = (
   path: string,
-  handler: (req: any, res: any) => any
+  handler: (req: any, res: any, log: any, error: any) => any
 ) => {
   postRoutes[path] = handler;
 };
@@ -14,7 +19,7 @@ export const handlePost = (
 export const postHandler = (path: string) => postRoutes[path];
 
 // ROUTES
-handlePost('/analysis', async (req: any, res: any) => {
+handlePost('/analysis', async (req: any, res: any, log: any) => {
   const validationRes = readingsValidator(req.body.bpData);
 
   if (validationRes.error)
@@ -34,27 +39,44 @@ handlePost('/analysis', async (req: any, res: any) => {
     apiKey: process.env.OPENROUTER_API_KEY,
   });
 
-  const response = await openRouterClient.chat.completions.create({
-    model: 'deepseek/deepseek-chat:free',
-    messages: [
-      {
-        role: 'system',
-        content:
-          'You are a helpful health assistant. Analyze the user’s blood pressure and pulse data and summarize trends or concerns in a clear, friendly way and in less than 50 words. Emphasize if the readings are not normal. Provide tips on maintaining a healthy blood pressure. Do not use markdown.',
-      },
-      {
-        role: 'user',
-        content: `Here is my blood pressure data from the past days:\n\n${readings}`,
-      },
-    ],
-  });
+  try {
+    const response = await openRouterClient.chat.completions.create({
+      model: 'deepseek/deepseek-chat:free',
+      messages: [
+        {
+          role: 'system',
+          content: prompt,
+        },
+        {
+          role: 'user',
+          content: `Here is my blood pressure data from the past days:\n\n${readings}`,
+        },
+      ],
+    });
 
-  const aiResponse = response.choices[0].message.content;
+    const aiResponse = response.choices[0].message.content;
+    if (!aiResponse) throw new Error('Empty AI response');
 
-  return res.json({
-    success: true,
-    data: aiResponse,
-    wordLength: aiResponse?.split(' ').length,
-    error: null,
-  });
+    const parsedAiResponse = parseAiResponse(aiResponse);
+
+    const finalResponseObject = {
+      insights: parsedAiResponse.slice(0, 3),
+      tips: parsedAiResponse.slice(3, 6),
+    };
+
+    return res.json({
+      success: true,
+      data: finalResponseObject,
+      error: null,
+    });
+  } catch (e: any) {
+    return res.json(
+      {
+        success: false,
+        data: null,
+        error: e.message,
+      },
+      500
+    );
+  }
 });
