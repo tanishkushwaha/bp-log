@@ -1,8 +1,11 @@
-const getRoutes: Record<string, (req: any, res: any) => any> = {};
+const getRoutes: Record<
+  string,
+  (req: any, res: any, log: any, error: any) => any
+> = {};
 
 export const handleGet = (
   path: string,
-  handler: (req: any, res: any) => any
+  handler: (req: any, res: any, log: any, error: any) => any
 ) => {
   getRoutes[path] = handler;
 };
